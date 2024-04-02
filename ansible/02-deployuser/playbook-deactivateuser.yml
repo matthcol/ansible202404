@@ -1,0 +1,9 @@
+---
+- name: Deactivate sudoers deployment user
+  hosts: all
+  become: yes
+  tasks:
+    - name: Remove sudoers specific file
+      ansible.builtin.file:
+        path: /etc/sudoers.d/{{ user_deploy }}
+        state: absent

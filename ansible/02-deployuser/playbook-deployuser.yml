@@ -2,27 +2,33 @@
 - name: Create User Deployment
   hosts: all
   become: yes
+  # vars:
+  #   user_deploy: deployer
   tasks:
+    - name: User to Create
+      ansible.builtin.debug:
+        # msg: "deployment username: {{ user_deploy }}"
+        var: user_deploy
     - name: Create User
       ansible.builtin.user:
-        name: deploy
+        name: "{{ user_deploy }}"
         shell: /usr/bin/bash
     - name: User Belongs to sudoers
       community.general.sudoers:
-        name: deploy
-        user: deploy
+        name: "{{ user_deploy }}"
+        user: "{{ user_deploy }}"
         commands: ALL
     - name: Create SSH Directory
       ansible.builtin.file:
-        path: /home/deploy/.ssh
+        path: /home/{{ user_deploy }}/.ssh
         state: directory
-        owner: deploy
-        group: deploy
+        owner: "{{ user_deploy }}"
+        group: "{{ user_deploy }}"
         mode: 0700
     - name: Copy SSH Key
       ansible.builtin.copy:
-        src: /home/srvadmin/.ssh/id_rsa_deploy.pub
-        dest: /home/deploy/.ssh/authorized_keys
-        owner: deploy
-        group: deploy
+        src: "{{ deployment_public_key }}"
+        dest: /home/{{ user_deploy }}/.ssh/authorized_keys
+        owner: "{{ user_deploy }}"
+        group: "{{ user_deploy }}"
         mode: 0600

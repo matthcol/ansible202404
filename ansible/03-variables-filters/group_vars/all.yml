@@ -1,0 +1,10 @@
+# text variables
+city1: Paris
+city2: "Pau"
+city3: 'Toulouse'
+# numeric variables
+days: 2
+# boolean 
+ok1: True
+ok2: true
+ok3: yes

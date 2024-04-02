@@ -1,0 +1,2 @@
+user_deploy: deploy
+deployment_public_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa_deploy.pub"
