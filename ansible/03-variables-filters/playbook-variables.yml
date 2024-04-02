@@ -1,0 +1,83 @@
+---
+- name: Play with Variables
+  hosts: rocky
+  gather_facts: no
+  tasks:
+    - name: Debug text variable
+      debug:
+        var: city1
+    - name: Debug text variables
+      debug:
+        msg: "{{ item }}"
+      with_items:
+        - "{{ city1 }}"
+        - "{{ city2 }}"
+        - "{{ city3 }}"
+    - name: Debug numeric value
+      debug:
+        var: days
+    - name: Debug numeric value as text
+      debug:
+        msg: 
+          - "{{ days_text | type_debug }}"
+          - "{{ days_text | int }}"
+          - "{{ days_text | int | type_debug }}"
+    - name: Compute with numeric variable
+      vars:
+        res: "{{ days + 1 }}"
+      debug:
+        var: res
+    - name: Computations with numeric variable
+      debug:
+        var: item
+      loop:
+        - "{{ days + 1 }}"
+        - "{{ days_text | int * 3 }}"
+        - "{{ days_text | int + 3 }}"
+    - name: Debug booleans variables
+      debug:
+        var: item
+      loop: "{{ [ ok1, ok2, ok3 ] }}"
+    - name: Debug list
+      debug:
+        var: cities
+    - name: Debug list 2
+      debug:
+        var: item
+      loop: "{{ [ cities, cities2, cities3 ] }}"
+    - name: Debug list element
+      debug:
+        var: cities[0]
+    - name: Debug dictionnary
+      debug:
+        var: city_dict
+    - name: Debug dictionnary 2
+      debug:
+        var: city_dict2
+    - name: Debug dictionnary element
+      debug:
+        var: city_dict2['name']
+    - name: Debug dictionnary element simplified
+      debug:
+        var: city_dict2.name
+
+- name: Play with optional variable
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Debug Optional Variable
+      debug:
+        # var: option # "option": "VARIABLE IS NOT DEFINED!"
+        msg: "optional var option: {{ option | default(1) }}" # with no filter: error: option is undefined
+    - name: Optional Task 1
+      debug:
+        msg: "only when ok1 is true"
+      when: ok1
+    - name: Optional Task 2
+      debug:
+        msg: "only when days = 2"
+      when: days == 2
+    - name: Optional Task 2
+      debug:
+        msg: "only when days > 1"
+      when: days > 1

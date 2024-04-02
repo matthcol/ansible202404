@@ -110,3 +110,6 @@ deployment_public_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa_deploy.pub"
 deployment_public_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_rsa_deploy.pub"
 
 # Variables, magic variables, jinja filters
+
+# Jinja Filters
+# https://jinja.palletsprojects.com/en/3.1.x/templates/#builtin-filters

@@ -1,0 +1,5 @@
+option: 2
+
+# override variable from group_vars/all.yml
+ok1: False
+days: 1

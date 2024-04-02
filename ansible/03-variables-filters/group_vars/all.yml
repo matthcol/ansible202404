@@ -4,7 +4,21 @@ city2: "Pau"
 city3: 'Toulouse'
 # numeric variables
 days: 2
+days_text: "2"
 # boolean 
 ok1: True
 ok2: true
 ok3: yes
+# list
+cities:
+  - Bordeaux
+  - "Lyon"
+  - 'Marseille'
+  - "{{ city3 }}"
+cities2: [ Bordeaux, "Lyon", 'Marseille' ]
+cities3: "{{ [ 'Bordeaux', 'Lyon', 'Marseille', city3 ] }}"
+# dictionnaries
+city_dict:
+  name: 'Toulouse'
+  population: 470000
+city_dict2: { name: 'Toulouse', population: 470000 }
