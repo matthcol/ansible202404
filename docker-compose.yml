@@ -1,0 +1,41 @@
+services:
+
+  pilot:
+    extends:
+      file: docker-common.yml
+      service: ansible
+    hostname: pilot.localdomain
+    ports:
+      - ${SSH_PORT0:-22}:22
+
+  host1:
+    extends:
+      file: docker-common.yml
+      service: rockysshsystemd9
+    hostname: host1.localdomain
+    ports:
+      - ${SSH_PORT3:-23}:22
+
+  host2:
+    extends:
+      file: docker-common.yml
+      service: rockysshsystemd9
+    hostname: host2.localdomain
+    ports:
+      - ${SSH_PORT4:-24}:22
+
+  host3:
+    extends:
+      file: docker-common.yml
+      service: debiansshsystem12
+    hostname: host3.localdomain
+    ports:
+      - ${SSH_PORT5:-25}:22
+
+  host4:
+    extends:
+      file: docker-common.yml
+      service: debiansshsystem12
+    hostname: host4.localdomain
+    ports:
+      - ${SSH_PORT6:-26}:22

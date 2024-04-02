@@ -1,0 +1,22 @@
+services:
+
+  ansible:
+    image: debiansshansible:12
+    build: ./debiansshansible12
+    volumes:
+      - ./ansible:/home/srvadmin/ansible
+      - ./artifacts:/mnt/artifacts
+
+  rockysshsystemd9:
+    image: rockysshsystemd:9
+    build: ./rockysshsystemd9
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+
+  debiansshsystem12:
+    image: debiansshsystemd:12
+    build: ./debiansshsystemd12
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
