@@ -36,3 +36,35 @@ ansible -i hosts_python -u srvadmin -k -m ansible.builtin.file -a "path=/tmp/dum
 ansible -i hosts_python -u srvadmin -k -m ansible.builtin.file -a "path=/tmp/dummy state=directory" "host*.localdomain"
 ansible -i hosts_python -u srvadmin -k -m ansible.builtin.file -a "path=/tmp/dummy state=directory" "servers:!host2.localdomain"
 ansible -i hosts_python -u srvadmin -k -m ansible.builtin.file -a "path=/tmp/dummy state=directory" 'servers:!host2.localdomain'
+
+# Ansible Project with playbook: 02-deployuser
+ansible-playbook -i hosts -u srvadmin -k -K playbook-deployuser.yml  
+
+# check collections already installed:
+ansible-galaxy collection list
+# install a collection
+sudo ansible-galaxy collection install community.general
+
+# generate ssh key
+ ssh-keygen
+ # file: /home/srvadmin/.ssh/id_rsa_deploy
+ # passphrase: <a long passphrase>
+ 
+ # checkup keys:
+ ls ~/.ssh
+
+# ansible with deploy user, specifying key and passphrase
+ansible -i hosts --private-key ~/.ssh/id_rsa_deploy -u deploy -m ping all 
+
+ssh-agent
+# copy-paste output
+ssh-add ~/.ssh/id_rsa_deploy
+# type ONCE passphrase
+# checkup identities managed by agent
+ssh-add -L
+# connect to remote host without password (key unlocked)
+ssh deploy@host1
+ansible -i hosts -u deploy -m ping all 
+# after deployment: remove unlocked key from agent
+ssh-key -D
+
