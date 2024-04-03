@@ -1,0 +1,11 @@
+---
+- name: Install Softwares
+  ansible.builtin.dnf:
+    name: "{{ package }}"
+  loop:
+    - java-{{ java_version }}-openjdk
+    - procps-ng
+    - psmisc
+    - net-tools
+  loop_control:
+    loop_var: package

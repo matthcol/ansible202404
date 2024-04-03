@@ -1,2 +1,3 @@
 ---
 # defaults file for roles/db
+pg_version: 16

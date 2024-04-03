@@ -1,0 +1,11 @@
+---
+- name: Reboot Host
+  ansible.builtin.reboot:
+
+- name: Host status
+  ansible.builtin.command: systemctl status api
+  register: apistatus_after_reboot
+
+- name: Debug Status After Reboot
+  ansible.builtin.debug:
+    var: apistatus_after_reboot

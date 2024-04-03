@@ -1,0 +1,44 @@
+---
+- name: Install Base Packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 36000
+  loop:
+    - gpg
+    - psmisc
+    - net-tools
+    - vim
+    - tree
+    - python3-psycopg2
+
+
+  # https://www.postgresql.org/download/linux/debian/
+    # add repo postgresql => check dir: /etc/apt/sources.list
+    # add key repo postgresql
+    # apt update (cache_valid_time:0) & install postgresql-[version]
+
+- name: PostgreSQL Repository Key
+  ansible.builtin.apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+- name: PostgreSQL Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main
+    filename: postgresql
+  register: add_repo_result
+
+- name: Debug Result PostgreSQL Repository
+  tags: [DEBUG]
+  ansible.builtin.debug:
+    var: add_repo_result
+
+- name: Update package list
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 0 
+  when: add_repo_result is changed
+
+- name: PostgreSQL package
+  ansible.builtin.apt:
+    name: postgresql-{{ pg_version }}
