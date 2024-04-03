@@ -138,3 +138,8 @@ deployment_public_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_rsa_
  ansible-playbook -i hosts -u deploy playbook-install.yml
  ansible-playbook -i hosts -u deploy -t API playbook-install.yml
  ansible-playbook -i hosts -u deploy -t DB  playbook-install.yml
+
+# Exercise: deploy api
+# create user userapi (var user) with id, gid < 1000, home=/opt_api, shell=/usr/bin/bash (then: nologin)
+# create directory /opt/api (var directory)
+# copy /mnt/movieapi-1.0.jar to /opt/api (var artifact)

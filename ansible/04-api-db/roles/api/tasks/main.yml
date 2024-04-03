@@ -3,3 +3,14 @@
 - name: Debug Start Install api
   ansible.builtin.debug:
     msg: Start Install API
+- name: Install Softwares
+  tags: PACKAGE
+  ansible.builtin.dnf:
+    name: "{{ package }}"
+  loop:
+    - java-{{ java_version }}-openjdk
+    - procps-ng
+    - psmisc
+    - net-tools
+  loop_control:
+    loop_var: package
