@@ -3,5 +3,7 @@
 - import_tasks: packages.yml
   tags: PACKAGE
 
+# TODO: start service postgresql
+
 - import_tasks: dbcontent.yml
   tags: DATA

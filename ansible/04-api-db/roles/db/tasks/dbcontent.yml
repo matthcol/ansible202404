@@ -1,0 +1,19 @@
+---
+- become_user: postgres
+  become_method: su
+  become_exe: "sudo su -"
+  block:
+    - name: Create DB
+      debug:
+        msg: Create DB
+
+    - name: Create User
+      community.postgresql.postgresql_user:
+        name: movie
+        password: password
+        role_attr_flags: LOGIN
+
+
+    - name: Config DB
+      debug:
+        msg: Config DB
