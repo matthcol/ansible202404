@@ -1,3 +1,6 @@
 ---
 # defaults file for roles/api
 java_version: 17
+user_api: userapi
+group_api: userapi
+var_directory: /opt/api

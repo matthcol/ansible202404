@@ -14,3 +14,30 @@
     - net-tools
   loop_control:
     loop_var: package
+- name: Create Group
+  ansible.builtin.group:
+    name: "{{ group_api }}"
+    state: present
+    gid: 0777
+- name: Create User
+  ansible.builtin.user:
+    name: "{{ user_api }}"
+    shell: /bin/bash
+    group: "{{ group_api }}"
+    home: "{{ var_directory }}"
+    uid: 0777
+- name: Create Directory "{{ var_directory }}"
+  ansible.builtin.file:
+   path: "{{ var_directory }}"
+   state: directory
+   owner: "{{ user_api }}"
+   group: "{{ group_api }}"
+   mode: '0755'
+
+- name: Copy API file
+  ansible.builtin.copy:
+    src: /mnt/artifacts/{{ var_artifact }}
+    dest: "{{ var_directory }}/{{ var_artifact }}"
+    mode: '0644'
+    owner: "{{ user_api }}"
+    group: "{{ group_api }}"

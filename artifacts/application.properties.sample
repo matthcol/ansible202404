@@ -1,0 +1,43 @@
+# disable H2 console
+#spring.h2.console.enabled=false
+
+# JPA configuration
+# -----------------
+
+# - JDBC URL
+#spring.datasource.url=jdbc:mariadb://localhost:3306/dbmovie
+#spring.datasource.url=jdbc:h2:mem:dbmovieapi;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;NON_KEYWORDS=year
+#spring.datasource.url=jdbc:postgresql://localhost:5432/dbmovie
+# - CREDENTIALS
+#spring.datasource.username=movie
+#spring.datasource.password=password
+# - GENERATE DDL
+spring.jpa.hibernate.ddl-auto=update
+# - (pretty) print SQL
+#spring.jpa.show-sql=true
+#spring.jpa.properties.hibernate.format_sql=true
+# disable old spring default setting annoying for a rest API
+spring.jpa.open-in-view=false
+
+# WEB configuration
+-------------------
+
+# Configure HTTP Port
+server.port=8080
+
+# Log configuration
+# -----------------
+
+# All my components
+#logging.level.org.example.movieapi=DEBUG
+
+# One specific controller
+#logging.level.org.example.movieapi.controller.MovieController=DEBUG
+#logging.level.org.example.movieapi.controller.PersonController=DEBUG
+
+# Services only
+#logging.level.org.example.movieapi.service=DEBUG
+
+# Hibernate log
+#logging.level.org.hibernate.SQL=DEBUG
+#logging.level.org.hibernate.orm.jdbc.bind=TRACE

@@ -143,3 +143,10 @@ deployment_public_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_rsa_
 # create user userapi (var user) with id, gid < 1000, home=/opt_api, shell=/usr/bin/bash (then: nologin)
 # create directory /opt/api (var directory)
 # copy /mnt/movieapi-1.0.jar to /opt/api (var artifact)
+
+# checkup on host1
+java --version
+ps
+pstree
+# on dev host, open a brower at url
+http://localhost:8080/swagger-ui/index.html
