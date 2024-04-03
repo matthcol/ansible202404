@@ -113,3 +113,28 @@ deployment_public_key: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_rsa_
 
 # Jinja Filters
 # https://jinja.palletsprojects.com/en/3.1.x/templates/#builtin-filters
+
+# Day2
+# play only a part of a playbook
+ ansible-playbook -i hosts --list-tasks playbook-variables.yml
+ ansible-playbook -i hosts --list-tags playbook-variables.yml
+ ansible-playbook -i hosts --list-hosts playbook-variables.yml
+ ansible-playbook -i hosts -u deploy --start-at-task "Debug hostname" playbook-variables.yml
+ ansible-playbook -i hosts -u deploy --start-at-task "Debug facts 4" playbook-variables.yml
+ # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html
+ ansible-playbook -i hosts -u deploy -t PLAY3 playbook-variables.yml
+ ansible-playbook -i hosts -u deploy -t PLAY1,PLAY2 playbook-variables.yml
+ ansible-playbook -i hosts -u deploy -t BOOL playbook-variables.yml
+ ansible-playbook -i hosts -u deploy -t HOST playbook-variables.yml # missing gathering facts
+ ansible-playbook -i hosts -u deploy --skip-tags HOST playbook-variables.yml
+ ansible-playbook -i hosts -u deploy -t PLAY3 --skip-tags HOST playbook-variables.yml
+
+ # project 04: API + DB
+ # create directories and files
+ ansible-galaxy init roles/db
+ ansible-galaxy init roles/api
+ ansible-galaxy init roles/common
+
+ ansible-playbook -i hosts -u deploy playbook-install.yml
+ ansible-playbook -i hosts -u deploy -t API playbook-install.yml
+ ansible-playbook -i hosts -u deploy -t DB  playbook-install.yml
