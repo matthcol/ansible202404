@@ -150,3 +150,39 @@ ps
 pstree
 # on dev host, open a brower at url
 http://localhost:8080/swagger-ui/index.html
+
+# Reboot
+# module reboot
+# article: https://www.redhat.com/sysadmin/automate-reboot-ansible
+
+# include vs import
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse.html#comparing-includes-and-imports-dynamic-and-static-reuse
+# NB: use only play tags with dynamic include
+
+# privilege escalation: become root => become postgres
+# add following line in /etc/ansible/ansible.cfg
+allow_world_readable_tmpfiles=yes
+
+ansible-playbook -i hosts -u deploy -t DB --skip-tags PACKAGE playbook-install.yml
+
+# with user os postgres (connection by socket UNIX)
+psql
+
+# check user db (connection by network socket)
+psql -U movie -h localhost -d postgres
+
+# VAULT
+- https://docs.ansible.com/ansible/latest/vault_guide/index.html
+- https://www.digitalocean.com/community/tutorials/how-to-use-vault-to-protect-sensitive-ansible-data
+
+ansible-vault create somevault.yml
+ansible-vault encrypt roles/db/vars/main.yml
+ansible-vault view roles/db/vars/main.yml
+ansible-vault edit roles/db/vars/main.yml
+ansible-vault decrypt roles/db/vars/main.yml
+
+ansible-playbook --ask-vault-password -i hosts -u deploy -t DB --skip-tags PACKAGE playbook-install.yml
+
+# NB:you can also put the password in a temporrary file and use a ENV VAR
+export ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass
+

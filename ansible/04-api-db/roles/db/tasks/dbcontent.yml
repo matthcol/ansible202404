@@ -9,8 +9,8 @@
 
     - name: Create User
       community.postgresql.postgresql_user:
-        name: movie
-        password: password
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
         role_attr_flags: LOGIN
 
 
