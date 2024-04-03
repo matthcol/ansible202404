@@ -1,0 +1,5 @@
+---
+# tasks file for roles/api
+- name: Debug Start Install api
+  ansible.builtin.debug:
+    msg: Start Install API

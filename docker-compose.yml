@@ -15,6 +15,7 @@ services:
     hostname: host1.localdomain
     ports:
       - ${SSH_PORT3:-23}:22
+      - 8080:8080
 
   host2:
     extends:
@@ -31,6 +32,7 @@ services:
     hostname: host3.localdomain
     ports:
       - ${SSH_PORT5:-25}:22
+      - 5432:5432
 
   host4:
     extends:

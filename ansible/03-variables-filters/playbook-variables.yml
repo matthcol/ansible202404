@@ -2,6 +2,8 @@
 - name: Play with Variables
   hosts: rocky
   gather_facts: no
+  tags:
+    - PLAY1
   tasks:
     - name: Debug text variable
       debug:
@@ -35,6 +37,8 @@
         - "{{ days_text | int * 3 }}"
         - "{{ days_text | int + 3 }}"
     - name: Debug booleans variables
+      tags:
+        - BOOL
       debug:
         var: item
       loop: "{{ [ ok1, ok2, ok3 ] }}"
@@ -64,6 +68,8 @@
 - name: Play with optional variable
   hosts: all
   gather_facts: no
+  tags:
+    - PLAY2
   tasks:
     - name: Debug Optional Variable
       debug:
@@ -81,3 +87,30 @@
       debug:
         msg: "only when days > 1"
       when: days > 1
+
+- name: Play with magical variables
+  hosts: all
+  tags:
+    - PLAY3
+  tasks:
+    # hostname from inventory or facts
+    - name: Debug hostname
+      tags:
+        - HOST
+      debug:
+        var: item
+      loop: "{{ [ ansible_hostname, inventory_hostname, inventory_hostname_short, groups ] }}"
+    # variables from facts
+    - name: Debug facts 1
+      debug:
+        var: ansible_facts.distribution
+    - name: Debug facts 2
+      debug:
+        var: ansible_distribution
+    - name: Debug facts 3
+      debug:
+        var: ansible_distribution_major_version
+    - name: Debug facts 4
+      tags: never
+      debug:
+        var: ansible_os_family
